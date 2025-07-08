@@ -62,11 +62,17 @@ Para cada uma das fontes de dados configurei _datasets_ no Azure Data Factory. E
      - Padronização da coluna Pais, formatámos registos em Caps Lock
      - Criação de coluna Mercado (“Nacional” ou “Internacional”) para permitir agrupamentos
 
+       ![image](https://github.com/user-attachments/assets/2d2159c4-20e5-40da-83fb-45c29bbdb484)
+
+
   4. DimProduto
 
      - Seleção das colunas essenciais
      - Criação de chave única que combine produto + empresa, já que um mesmo produto pode ter sido expandido a várias empresas.
      - Padronização dos textos de algumas colunas que tinham textos em caps lock).
+
+        ![image](https://github.com/user-attachments/assets/7d6a1235-c3ae-44c1-a85f-ab638c99d4bf)
+
   
   5. DimProjeto
 
@@ -74,11 +80,15 @@ Para cada uma das fontes de dados configurei _datasets_ no Azure Data Factory. E
      - Padronização das colunas com registos em Caps Lock.
      - Criação da coluna da Linha de Negócio para que nas análises consigamos perceber a que linha pertencem os projetos vendidos.
      - Formatação da coluna Status para termos maior clareza sobre os status actuais dos projetos
+    
+       ![image](https://github.com/user-attachments/assets/4edee995-d5c0-41ec-aecc-5db1df2bd562)
+
 
   6. DimTipoVenda
 
      - Apenas seleção das colunas necessárias, sem transformações adicionais.
     
+       ![image](https://github.com/user-attachments/assets/1fe309f4-7d85-4d65-879f-1b38c6e4a899)
 
   ###### Tabelas Facto
 
@@ -94,7 +104,9 @@ Para cada uma das fontes de dados configurei _datasets_ no Azure Data Factory. E
      - Em cada join filtrámos pelo idPais (usando expressão CASE para atribuir país correto).
      - Para o câmbio, definimos que, em países com que a empresa opera com a mesma moeda (Portugal, Malta e Espanha), o valor seria fixado como 1; nos outros, usamos a taxa específica.
      - Seleção final de colunas com as chaves (iddata, idpais) e valores macroeconómicos
-    
+
+        ![image](https://github.com/user-attachments/assets/8fb2a00c-6aa7-413f-88f8-32ffd8a9f233)
+
   3. FactVendas
 
      - Seleção das colunas principais de vendas.
@@ -103,6 +115,7 @@ Para cada uma das fontes de dados configurei _datasets_ no Azure Data Factory. E
      - Atualização da coluna ValorMargem: quando o tipo de venda é “1ª manutenção” ou “manutenção”, define-se que a margem é igual à faturação, pois não há custos associados.
      - Posteriormente foram identificados casos onde a margem foi incorretamente inserida como sendo o valor de venda, multiplicado por -1 o que levou a existência de custos incorretos. Para solucionar este desafio a coluna Margem foi transformada em ABS o que assegura que todos os valores da margem de vendas são positivos. Assim nos casos onde a margem foi igual à venda o valor do custo aparece corretamente. Esta decisão foi validada com base na natureza das ocorrências, maioritariamente associadas a licenças próprias, onde efectivamente não existe custo associado, justificando margens iguais ao valor da venda.
 
+        ![image](https://github.com/user-attachments/assets/7513e855-130b-4191-99b9-263acdc5fe4b)
 
 Após a construção e transformação das tabelas dimensão e facto, foram desenvolvidos dois pipelines no Azure Data Factory: um dedicado ao carregamento das tabelas dimensão e outro ao das tabelas facto. Cada pipeline tem como destino a pasta processed, localizada num container no Azure Data Lake, onde os ficheiros são gravados em formato Parquet, garantindo eficiência no armazenamento e leitura. Paralelamente, os dados processados são também carregados para o Azure Data Studio, permitindo que as equipas de análise e desenvolvimento realizem consultas, validação de dados e análises complementares de forma mais flexível e integrada. Esta abordagem híbrida — com armazenamento em data lake e exposição em SQL — assegura desempenho, rastreabilidade e acessibilidade.
      
