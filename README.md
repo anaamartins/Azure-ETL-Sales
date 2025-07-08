@@ -47,11 +47,16 @@ Para cada uma das fontes de dados configurei _datasets_ no Azure Data Factory. E
      
      - Seleção das colunas relevantes
      - Tratamento da coluna Cidade: split para remover na coluna Cidade registos que continham Cidade e País e formatação de registos que estavam com texto em Caps Lock de forma a garantir a uniformização dos dados
+    
+       ![image](https://github.com/user-attachments/assets/5e542b2a-4127-455e-9ad2-d8a259f48d21)
+
        
   2. DimEmpresa
 
      - Carregamento direto do ficheiro Parquet (previamente convertido do Excel), sem necessidade de transformações adicionais
-    
+
+        ![image](https://github.com/user-attachments/assets/e37e2ca9-ea18-49f5-b644-211a033837f6)
+
   3. DimPais
 
      - Padronização da coluna Pais, formatámos registos em Caps Lock
